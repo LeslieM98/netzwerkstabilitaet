@@ -15,14 +15,16 @@ then
 fi
 
 make_measurement() {
-  
-  if ! ping google.com -c 1 > $TMP
+
+  echo "---DATE---" > $TMP
+  date >> $TMP  
+  echo "---START DATA---" >> $TMP
+  PINGRESULT=$(ping google.com -c 5 >> $TMP)
+  echo "---END DATA---" >> $TMP
+
+  if ! $PINGRESULT
   then 
-    echo "---DATE---" >> $OUTPUT
-    date >> $OUTPUT
-    echo "---START DATA---" >> $OUTPUT
     cat $TMP >> $OUTPUT
-    echo "---END DATA---" >> $OUTPUT
     return 1
   fi
   return 0
